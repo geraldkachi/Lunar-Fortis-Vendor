@@ -3,7 +3,7 @@ import { Badge, SuccessModal, Select } from "@/components/ui";
 import { TEAM_USERS } from "@/lib/mockData";
 import { cn } from "@/lib/utils";
 import { Plus, MoreVertical, Search } from "lucide-react";
-import type { TeamUser } from "@/types";
+import type { TeamUser, UserStatus } from "@/types";
 
 const STATS = [
   { label: "ALL USERS", value: "—" },
@@ -41,7 +41,7 @@ function AddUserModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: 
 function ModifyUserPanel({ user, onClose }: { user: TeamUser; onClose: () => void }) {
   const [name, setName] = useState(user.name);
   const [role, setRole] = useState(user.role);
-  const [status, setStatus] = useState(user.status);
+  const [status, setStatus] = useState(user.status as "active" | "disabled");
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
       <div className="bg-white rounded-2xl w-full max-w-sm shadow-modal p-6">
@@ -51,9 +51,11 @@ function ModifyUserPanel({ user, onClose }: { user: TeamUser; onClose: () => voi
             <input value={name} onChange={e => setName(e.target.value)} className="lf-input" /></div>
           <div><label className="lf-label">Email</label>
             <input value={user.email} readOnly className="lf-input opacity-60 cursor-not-allowed" /></div>
-          <Select label="Role" value={role} onChange={setRole}
+          <Select label="Role" value={role} 
+          // onChange={setRole}  
+           onChange={(v) => setRole(v as "user" | "admin")} 
             options={[{ value: "admin", label: "Admin" }, { value: "user", label: "User" }]} />
-          <Select label="Status" value={status} onChange={v => setStatus(v as any)}
+          <Select label="Status" value={status} onChange={v => setStatus(v as UserStatus)}
             options={[{ value: "active", label: "Active" }, { value: "disabled", label: "Disabled" }]} />
           <button onClick={onClose} className="btn-primary">Update User</button>
         </div>
