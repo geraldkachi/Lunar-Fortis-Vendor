@@ -22,33 +22,120 @@ function statusFromTab(tab: Tab): BookingStatus | undefined {
   if (tab === "Declined Requests") return "declined";
   return undefined;
 }
+interface TrackingStep {
+  key: string;
+  label: string;
+  time?: string;
+  completed: boolean;
+}
 
-function TrackingProgress({ booking }: { booking: Booking }) {
+interface TrackingProgressProps {
+  steps: TrackingStep[];
+  className?: string;
+}
+
+export function TrackingProgress({ steps, className }: TrackingProgressProps) {
   return (
-    <div>
-      <p className="text-[10px] font-semibold text-[#6B7280] uppercase tracking-wider mb-3">TRACKING PROGRESS</p>
-      {booking.trackingProgress?.map((step, i, arr) => (
-        <div key={step.key} className="flex gap-2">
-          <div className="flex flex-col items-center">
-            <div className={cn("w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0",
-              step.completed ? "bg-[#0D1B2A]" : step.key === "declined" ? "bg-[#EF4444]" : "bg-[#E5E7EB]")}>
-              {step.completed
-                ? step.key === "declined"
-                  ? <X size={12} className="text-white" />
-                  : <Check size={12} className="text-white" strokeWidth={2.5} />
-                : <div className="w-1.5 h-1.5 rounded-full bg-[#9CA3AF]" />}
+    <div className={cn("", className)}>
+      <p className="text-[10px] font-semibold text-[#6B7280] uppercase tracking-wider mb-4">
+        TRACKING PROGRESS
+      </p>
+      <div className="space-y-0">
+        {steps.map((step, i, arr) => {
+          const isCompleted = step.completed;
+          const isDeclined = step.key === "declined";
+          const isLast = i === arr.length - 1;
+          
+          return (
+            <div key={step.key} className="flex gap-3">
+              {/* Left - Circle + Line */}
+              <div className="flex flex-col items-center">
+                <div
+                  className={cn(
+                    "w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-200",
+                    isCompleted
+                      ? isDeclined
+                        ? "bg-[#EF4444]"
+                        : "bg-[#0D1B2A]"
+                      : "bg-[#E5E7EB]"
+                  )}
+                >
+                  {isCompleted ? (
+                    isDeclined ? (
+                      <X size={12} className="text-white" strokeWidth={2.5} />
+                    ) : (
+                      <Check size={12} className="text-white" strokeWidth={2.5} />
+                    )
+                  ) : (
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#9CA3AF]" />
+                  )}
+                </div>
+                {/* Connecting Line */}
+                {!isLast && (
+                  <div
+                    className={cn(
+                      "w-0.5 h-5 transition-colors duration-200",
+                      isCompleted ? "bg-[#0D1B2A]" : "bg-[#E5E7EB]"
+                    )}
+                  />
+                )}
+              </div>
+
+              {/* Right - Label + Time */}
+              <div className="pb-3.5">
+                <p
+                  className={cn(
+                    "text-xs font-medium transition-colors duration-200",
+                    isCompleted ? "text-[#0D1B2A]" : "text-[#9CA3AF]"
+                  )}
+                >
+                  {step.label}
+                </p>
+                {step.time && (
+                  <p
+                    className={cn(
+                      "text-[10px] transition-colors duration-200",
+                      isCompleted ? "text-[#6B7280]" : "text-[#C4C4C4]"
+                    )}
+                  >
+                    {step.time}
+                  </p>
+                )}
+              </div>
             </div>
-            {i < arr.length - 1 && <div className={cn("w-0.5 h-6", step.completed ? "bg-[#0D1B2A]" : "bg-[#E5E7EB]")} />}
-          </div>
-          <div className="pb-3">
-            <p className={cn("text-xs font-semibold", step.completed ? "text-[#0D1B2A]" : "text-[#9CA3AF]")}>{step.label}</p>
-            {step.time && <p className={cn("text-[10px]", step.completed ? "text-[#6B7280]" : "text-[#C4C4C4]")}>{step.time}</p>}
-          </div>
-        </div>
-      ))}
+          );
+        })}
+      </div>
     </div>
   );
 }
+
+// function TrackingProgress({ booking }: { booking: Booking }) {
+//   return (
+//     <div>
+//       <p className="text-[10px] font-semibold text-[#6B7280] uppercase tracking-wider mb-3">TRACKING PROGRESS</p>
+//       {booking.trackingProgress?.map((step, i, arr) => (
+//         <div key={step.key} className="flex gap-2">
+//           <div className="flex flex-col items-center">
+//             <div className={cn("w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0",
+//               step.completed ? "bg-[#0D1B2A]" : step.key === "declined" ? "bg-[#EF4444]" : "bg-[#E5E7EB]")}>
+//               {step.completed
+//                 ? step.key === "declined"
+//                   ? <X size={12} className="text-white" />
+//                   : <Check size={12} className="text-white" strokeWidth={2.5} />
+//                 : <div className="w-1.5 h-1.5 rounded-full bg-[#9CA3AF]" />}
+//             </div>
+//             {i < arr.length - 1 && <div className={cn("w-0.5 h-6", step.completed ? "bg-[#0D1B2A]" : "bg-[#E5E7EB]")} />}
+//           </div>
+//           <div className="pb-3">
+//             <p className={cn("text-xs font-semibold", step.completed ? "text-[#0D1B2A]" : "text-[#9CA3AF]")}>{step.label}</p>
+//             {step.time && <p className={cn("text-[10px]", step.completed ? "text-[#6B7280]" : "text-[#C4C4C4]")}>{step.time}</p>}
+//           </div>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
 
 function BookingDetailView({ booking, onBack }: { booking: Booking; onBack: () => void }) {
   const [modal, setModal] = useState<"accept"|"accepted"|"reject"|"rejected"|"receipt"|null>(null);
@@ -64,9 +151,10 @@ function BookingDetailView({ booking, onBack }: { booking: Booking; onBack: () =
         <span className="text-[#0D1B2A] font-medium">Booking Details</span>
       </p>
 
-      <div className="grid grid-cols-[1fr_300px] gap-6">
+      {/* <div className="grid grid-cols-[1fr_300px] gap-6"> */}
+      <div className="grid md:grid-cols-5 gap-6">
         {/* Left */}
-        <div className="border border-[#E5E7EB] rounded-xl p-5">
+        <div className="col-span-3 border border-[#E5E7EB] rounded-xl p-5">
           <div className="flex items-start justify-between mb-5">
             <div>
               <h2 className="text-lg font-bold text-[#0D1B2A]">Booking Details</h2>
@@ -119,7 +207,7 @@ function BookingDetailView({ booking, onBack }: { booking: Booking; onBack: () =
         </div>
 
         {/* Right — Tracking */}
-        <div className="space-y-4">
+        <div className="col-span-2 space-y-4">
           {!isCompleted && !isDeclined && (
             <div className="flex items-center justify-between">
               <span className="text-lg font-bold text-[#E8392A] font-mono">{countdown}</span>
@@ -129,7 +217,8 @@ function BookingDetailView({ booking, onBack }: { booking: Booking; onBack: () =
             </div>
           )}
 
-          <TrackingProgress booking={booking} />
+          {/* <TrackingProgress booking={booking} /> */}
+           <TrackingProgress steps={booking.trackingProgress || []} />
 
           {/* CTA */}
           {!isCompleted && !isDeclined && (

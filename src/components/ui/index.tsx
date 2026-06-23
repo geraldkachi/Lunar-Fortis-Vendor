@@ -33,7 +33,7 @@ export function Badge({ variant, label }: { variant: BadgeVariant; label?: strin
     cancelled: { cls: "badge-declined", dot: "bg-[#EF4444]", text: label ?? "Cancelled" },
   };
     const fallback = { cls: "badge-inactive", dot: "bg-[#6B7280]", text: label ?? String(variant) };
-  const { cls, dot, text } = map[variant];
+  const { cls, dot, text } = map[variant] ?? fallback;
   return (
     <span className={cls}>
       <span className={cn("w-1.5 h-1.5 rounded-full inline-block", dot)} />
