@@ -26,13 +26,15 @@ export default function App() {
       <Route path="/onboarding/kyb" element={<KYBPage />} />
 
       {/* Dashboard */}
-      <Route path="/dashboard" element={<DashboardLayout><HomePage /></DashboardLayout>} />
-      <Route path="/dashboard/bookings" element={<DashboardLayout><BookingsPage /></DashboardLayout>} />
-      <Route path="/dashboard/transactions" element={<DashboardLayout><TransactionsPage /></DashboardLayout>} />
-      <Route path="/dashboard/products" element={<DashboardLayout><ProductsPage /></DashboardLayout>} />
-      <Route path="/dashboard/audit" element={<DashboardLayout><AuditPage /></DashboardLayout>} />
-      <Route path="/dashboard/users" element={<DashboardLayout><UsersPage /></DashboardLayout>} />
-      <Route path="/dashboard/settings" element={<DashboardLayout><SettingsPage /></DashboardLayout>} />
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="bookings" element={<BookingsPage />} />
+        <Route path="transactions" element={<TransactionsPage />} />
+        <Route path="products" element={<ProductsPage />} />
+        <Route path="audit" element={<AuditPage />} />
+        <Route path="users" element={<UsersPage />} />
+        <Route path="settings" element={<SettingsPage />} />
+      </Route>
 
       {/* Default */}
       <Route path="/" element={<Navigate to="/login" replace />} />
