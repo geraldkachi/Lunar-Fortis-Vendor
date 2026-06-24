@@ -90,7 +90,7 @@ function DonutChart({ active, pending, rejected, total }: {
       <Doughnut ref={chartRef} data={data} options={options} />
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
         <p className="text-2xl font-bold text-[#0D1B2A]">{total}</p>
-        <p className="text-xs text-[#6B7280]">Merchants</p>
+        <p className="text-xs text-[#6B7280]">Bookings</p>
       </div>
     </div>
   );
@@ -113,7 +113,7 @@ function MerchantLineChart() {
     labels: CHART_DATA.map(item => item.month),
     datasets: [
       {
-        label: 'Active Merchants',
+        label: 'Active Bookings',
         data: CHART_DATA.map(item => Math.round(item.active)),
         borderColor: '#10B981',
         backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -123,7 +123,7 @@ function MerchantLineChart() {
         pointHoverRadius: 6,
       },
       {
-        label: 'Pending Merchants',
+        label: 'Pending Bookings',
         data: CHART_DATA.map(item => Math.round(item.pending)),
         borderColor: '#F59E0B',
         backgroundColor: 'rgba(245, 158, 11, 0.1)',
@@ -133,7 +133,7 @@ function MerchantLineChart() {
         pointHoverRadius: 6,
       },
       {
-        label: 'Rejected Merchants',
+        label: 'Rejected Bookings',
         data: CHART_DATA.map(item => Math.round(item.rejected)),
         borderColor: '#EF4444',
         backgroundColor: 'rgba(239, 68, 68, 0.1)',
@@ -219,7 +219,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-[#0D1B2A] mb-6">Merchants</h1>
+      {/* <h1 className="text-2xl font-bold text-[#0D1B2A] mb-6">Bookings</h1> */}
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -247,9 +247,9 @@ export default function HomePage() {
 
       {/* Charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
-        {/* Merchant Overview donut */}
+        {/* Booking Overview donut */}
         <div className="bg-white border border-[#E5E7EB] rounded-xl p-5">
-          <h3 className="text-sm font-bold text-[#0D1B2A] mb-4">Merchant Overview</h3>
+          <h3 className="text-sm font-bold text-[#0D1B2A] mb-4">Booking Overview</h3>
           <div className="flex flex-col items-center">
             <DonutChart 
               active={Math.round(latestData.active)} 
@@ -259,9 +259,9 @@ export default function HomePage() {
             />
             <div className="mt-4 space-y-2 w-full">
               {[
-                { label: "Active Merchants", pct: `${activePct}%`, color: "#10B981" },
-                { label: "Pending Merchants", pct: `${pendingPct}%`, color: "#F59E0B" },
-                { label: "Rejected Merchants", pct: `${rejectedPct}%`, color: "#EF4444" },
+                { label: "Active Bookings", pct: `${activePct}%`, color: "#10B981" },
+                { label: "Pending Bookings", pct: `${pendingPct}%`, color: "#F59E0B" },
+                { label: "Rejected Bookings", pct: `${rejectedPct}%`, color: "#EF4444" },
               ].map(({ label, pct, color }) => (
                 <div key={label} className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
@@ -275,9 +275,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* KYB Overview donut */}
+        {/* Transaction Overview donut */}
         <div className="bg-white border border-[#E5E7EB] rounded-xl p-5">
-          <h3 className="text-sm font-bold text-[#0D1B2A] mb-4">KYB Overview</h3>
+          <h3 className="text-sm font-bold text-[#0D1B2A] mb-4">Transaction Overview</h3>
           <div className="flex flex-col items-center">
             <DonutChart 
               active={Math.round(latestData.active * 0.95)} 
@@ -287,9 +287,9 @@ export default function HomePage() {
             />
             <div className="mt-4 space-y-2 w-full">
               {[
-                { label: "Approved KYB", pct: `${((Math.round(latestData.active * 0.95) / total) * 100).toFixed(1)}%`, color: "#10B981" },
-                { label: "Pending KYB", pct: `${((Math.round(latestData.pending * 1.1) / total) * 100).toFixed(1)}%`, color: "#F59E0B" },
-                { label: "Rejected KYB", pct: `${((Math.round(latestData.rejected * 0.9) / total) * 100).toFixed(1)}%`, color: "#EF4444" },
+                { label: "Approved Transactions", pct: `${((Math.round(latestData.active * 0.95) / total) * 100).toFixed(1)}%`, color: "#10B981" },
+                { label: "Pending Transactions", pct: `${((Math.round(latestData.pending * 1.1) / total) * 100).toFixed(1)}%`, color: "#F59E0B" },
+                { label: "Rejected Transactions", pct: `${((Math.round(latestData.rejected * 0.9) / total) * 100).toFixed(1)}%`, color: "#EF4444" },
               ].map(({ label, pct, color }) => (
                 <div key={label} className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
@@ -305,7 +305,7 @@ export default function HomePage() {
 
         {/* Top Merchant Locations */}
         <div className="bg-white border border-[#E5E7EB] rounded-xl p-5">
-          <h3 className="text-sm font-bold text-[#0D1B2A] mb-4">Top Merchant Location</h3>
+          <h3 className="text-sm font-bold text-[#0D1B2A] mb-4">Top Performing Products</h3>
           <div className="space-y-3">
             {MERCHANT_LOCATIONS.map(loc => (
               <div key={loc.city}>
@@ -328,12 +328,12 @@ export default function HomePage() {
       {/* Line chart */}
       <div className="bg-white border border-[#E5E7EB] rounded-xl p-5">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
-          <h3 className="text-sm font-bold text-[#0D1B2A]">Merchant Overview</h3>
+          <h3 className="text-sm font-bold text-[#0D1B2A]">Booking Overview</h3>
           <div className="flex flex-wrap items-center gap-3 text-xs">
             {[
-              { label: `Active Merchants ${activePct}%`, color: "#10B981" },
-              { label: `Pending Merchants ${pendingPct}%`, color: "#F59E0B" },
-              { label: `Rejected Merchants ${rejectedPct}%`, color: "#EF4444" },
+              { label: `Active Bookings ${activePct}%`, color: "#10B981" },
+              { label: `Pending Bookings ${pendingPct}%`, color: "#F59E0B" },
+              { label: `Rejected Bookings ${rejectedPct}%`, color: "#EF4444" },
             ].map(({ label, color }) => (
               <div key={label} className="flex items-center gap-1.5">
                 <span className="w-3 h-0.5 rounded inline-block" style={{ background: color }} />
