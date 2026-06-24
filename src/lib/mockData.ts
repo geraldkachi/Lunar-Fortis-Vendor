@@ -1,4 +1,4 @@
-import type { Booking, Transaction, Product, TeamUser, TrackingStep } from "@/types";
+import type { Booking, Transaction, Product, TeamUser, TrackingStep, MerchantLocation } from "@/types";
 
 export const formatPrice = (n: number) => `₦ ${n.toLocaleString("en-NG")}`;
 
@@ -92,3 +92,21 @@ export const MOCK_RECEIPT = {
   transactionRef: "pocket_disburse_1155470048562623",
   sessionId: "090405280430150036372237066022",
 };
+
+export const CHART_DATA = Array.from({ length: 12 }, (_, i) => ({
+  month: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][i],
+  active: 400 + Math.sin(i * 0.8) * 200 + i * 40,
+  pending: 50 + Math.cos(i * 0.6) * 30 + i * 5,
+  rejected: 20 + Math.sin(i * 1.2) * 15,
+}));
+
+export const MERCHANT_LOCATIONS: MerchantLocation[] = [
+  { city: "Lagos", count: 231, max: 231 },
+  { city: "Kaduna", count: 156, max: 231 },
+  { city: "Jos", count: 109, max: 231 },
+  { city: "Awka", count: 156, max: 231 },
+  { city: "Benin", count: 156, max: 231 },
+  { city: "Rivers", count: 80, max: 231 },
+  // { city: "Ekiti", count: 156, max: 231 },
+  // { city: "Abia", count: 40, max: 231 },
+];

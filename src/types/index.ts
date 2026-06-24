@@ -100,3 +100,9 @@ export interface OnboardingData {
   email: string;
   phone: string;
 }
+
+export interface MerchantLocation {
+  city: string;
+  count: number;
+  max: number;
+}
