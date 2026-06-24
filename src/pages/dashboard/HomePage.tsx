@@ -86,6 +86,7 @@ function DonutChart({ active, pending, rejected, total }: {
 
   return (
     <div className="relative" style={{ width: 140, height: 140 }}>
+      {/* @ts-ignore */}
       <Doughnut ref={chartRef} data={data} options={options} />
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
         <p className="text-2xl font-bold text-[#0D1B2A]">{total}</p>
@@ -200,6 +201,7 @@ function MerchantLineChart() {
 
   return (
     <div style={{ height: 220, width: '100%' }}>
+      {/* @ts-ignore */}
       <Line ref={chartRef} data={data} options={options} />
     </div>
   );
