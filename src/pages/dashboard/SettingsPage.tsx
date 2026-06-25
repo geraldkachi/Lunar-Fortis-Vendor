@@ -33,7 +33,7 @@ function BusinessInfoPage({ onBack }: { onBack: () => void }) {
       </div>
 
       {tab === 0 && (
-        <div className="max-w-lg space-y-4">
+        <div className="max-w-3xl space-y-4">
           <div><label className="lf-label">Registered Business Name *</label><input defaultValue="Adekay Houses" className="lf-input" /></div>
           <div className="grid grid-cols-2 gap-3">
             <div><label className="lf-label">RC Number *</label><input defaultValue="123456890" className="lf-input" /></div>
@@ -66,7 +66,7 @@ function AccountSettingsPage({ onBack }: { onBack: () => void }) {
         <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-[#6B7280] hover:text-[#0D1B2A] mb-5">
           <ArrowLeft size={15} /> Back
         </button>
-        <div className="max-w-md space-y-3">
+        <div className="max-w-3xl space-y-3">
           <button onClick={() => setSub("2fa_phone")}
             className="w-full flex items-center gap-3 p-4 border border-[#E5E7EB] rounded-xl hover:border-[#0D1B2A] transition-colors text-left">
             <ShieldCheck size={18} className="text-[#4F7FAF]" />
@@ -87,7 +87,7 @@ function AccountSettingsPage({ onBack }: { onBack: () => void }) {
   if (sub === "2fa_phone" || sub === "2fa_email") {
     const isPhone = sub === "2fa_phone";
     return (
-      <div className="max-w-sm">
+      <div className="max-w-lg">
         <button onClick={() => setSub("main")} className="flex items-center gap-1.5 text-sm text-[#6B7280] hover:text-[#0D1B2A] mb-5">
           <ArrowLeft size={15} /> Back
         </button>
@@ -105,7 +105,7 @@ function AccountSettingsPage({ onBack }: { onBack: () => void }) {
 
   if (sub === "2fa_updated") {
     return (
-      <div className="max-w-sm">
+      <div className="max-w-lg">
         <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 bg-[#EEF3F8] rounded-full flex items-center justify-center">
@@ -145,7 +145,7 @@ function AccountSettingsPage({ onBack }: { onBack: () => void }) {
         </button>
         <h2 className="text-base font-bold text-[#0D1B2A] mb-1">Change Password</h2>
         <p className="text-xs text-[#6B7280] mb-5">Select an option to further secure your account.</p>
-        <div className="max-w-sm space-y-4">
+        <div className="max-w-lg space-y-4">
           {(["Current Password","New Password","Confirm Password"] as const).map((label, i) => {
             const key = (["current","new","confirm"] as const)[i];
             return (
@@ -183,7 +183,7 @@ function PayoutPage({ onBack }: { onBack: () => void }) {
       </button>
       <h2 className="text-base font-bold text-[#0D1B2A] mb-1">Payout Account Details</h2>
       <p className="text-xs text-[#6B7280] mb-5">Can only be changed once</p>
-      <div className="max-w-sm space-y-4">
+      <div className="max-w-lg space-y-4">
         <Select label="Bank Name *" value="First Bank" onChange={() => {}}
           options={[{ value: "First Bank", label: "First Bank" }, { value: "GTBank", label: "GTBank" }, { value: "UBA", label: "UBA" }]} />
         <div><label className="lf-label">Account Number</label><input defaultValue="0123456789" className="lf-input" /></div>
@@ -203,7 +203,7 @@ function BrandingPage({ onBack }: { onBack: () => void }) {
       </button>
       <h2 className="text-base font-bold text-[#0D1B2A] mb-1">Branding</h2>
       <p className="text-xs text-[#6B7280] mb-5">Customize your business identity with logos, visuals, and brand assets for a professional presence.</p>
-      <div className="max-w-sm space-y-4">
+      <div className="max-w-lg space-y-4">
         <div>
           <label className="lf-label">Brand Logo</label>
           <div className="flex gap-2">
@@ -248,7 +248,7 @@ function NotificationPage({ onBack }: { onBack: () => void }) {
         </div>
         <button className="text-xs text-[#4F7FAF] font-semibold hover:underline">Un-toggle all</button>
       </div>
-      <div className="max-w-sm space-y-4">
+      <div className="max-w-lg space-y-4">
         {ITEMS.map(item => (
           <div key={item.key} className="flex items-center justify-between">
             <span className="text-sm text-[#0D1B2A]">{item.label}</span>
@@ -275,7 +275,7 @@ export default function SettingsPage() {
     if (section === "notification") return <NotificationPage onBack={() => setSection("main")} />;
 
     return (
-      <div className="max-w-lg">
+      <div className="max-w-3xl">
         <h2 className="text-base font-bold text-[#0D1B2A] mb-5">Settings</h2>
         <div className="space-y-3">
           {SETTINGS_ITEMS.map(item => (
